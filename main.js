@@ -1,9 +1,90 @@
+class Navbar extends React.Component {
+  
+
+  render() {
+ 
+    return (
+      <div>
+      <div onClick={this.props.hideNav} className='spans2' style={{opacity: this.props.displaySpan ? '1' : '0'}}>
+      </div>
+        <nav style={{left: this.props.displayNav ? -100 + '%' : 0 + '%'}}>
+         <div className='logo'>
+          <h1>Google Drive</h1>
+         </div>
+         <div className='nav-content'>
+          <div className='option'>
+            <span><i class="far fa-clock"></i></span>
+            <h5>Recent</h5>
+          </div>
+          <div className='option'>
+            <span><i class="far fa-check-circle"></i></span>
+            <h5>Offline</h5>
+          </div>
+          <div className='option'>
+            <span><i class="far fa-trash-alt"></i></span>
+            <h5>Trash</h5>
+          </div>
+          <div className='option'>
+            <span><i class="fas fa-cloud-download-alt"></i></span>
+            <h5>Backups</h5> 
+          </div>
+          <div className='option'>
+            <span><i class="fas fa-cog"></i></span>
+            <h5>Settings</h5>
+          </div>
+          <div className='option'>
+            <span><i class="far fa-question-circle"></i></span>
+            <h5>Help & feedback</h5>
+          </div>
+          <div className='option'>
+            <span><i class="fas fa-cloud"></i></span>
+            <h5>Storage</h5>
+          </div>
+          <div className='max-range'>
+            <div className='min-range'>
+            </div>
+          </div>
+          <p>315.65 MB of 15.0 GB</p>
+         </div>
+        </nav>
+      </div>
+    )
+  }
+}
+
+
 class Header extends React.Component {
+  
+  state = {
+    displayNav: true,
+    displaySpan: false
+  }
+  
+  showNav = () => {
+    this.setState({
+      displayNav: !this.state.displayNav,
+      displaySpan: true
+    })
+  }
+  
+  hideNav = () => {
+    this.setState({
+      displayNav: true,
+      displaySpan: false
+    })
+  }
+  
   render() {
     return(
+      <div>
+       <Navbar 
+        hideNav={this.hideNav}
+        displaySpan={this.state.displaySpan} 
+        displayNav={this.state.displayNav} 
+       />
       <div className="head-container">
         <div className='first-head'>
-          <button className='menu'><i class="fas fa-bars"></i></button>
+          <button onClick={this.showNav} className='menu'><i class="fas fa-bars"></i></button>
           <input className="searchbar" placeholder='Search in Drive' />
           <span className='profile'><img src='images/profile.jpg'/></span>
         </div>
@@ -11,6 +92,7 @@ class Header extends React.Component {
           <button className='suggestedBtn'>Suggested</button>
           <button className='notifBtn'>Notifications</button>
         </div>
+      </div>
       </div>
     )
   }
@@ -151,6 +233,7 @@ class File extends React.Component {
   }
   
   showOpt = () => {
+    console.log('cliked')
     this.setState({
       displayOpt: !this.state.displayOpt,
       body: document.body.style.position = 'fixed',
@@ -194,19 +277,6 @@ class Files extends React.Component {
   }
 }
 
-class Navbar extends React.Component  {
-  render() {
-    return(
-      <div>
-        <div className='spans'></div>
-        <nav>
-          
-        </nav>
-      </div>
-    )
-  }
-}
-
 
 class App extends React.Component {
   
@@ -231,7 +301,7 @@ class App extends React.Component {
         img: 'images/file2.png'
       }
     ],
-    displayBtn: false
+    displayBtn: false,
   }
   
   componentDidMount() {
@@ -248,11 +318,13 @@ class App extends React.Component {
     })
   }
   
+  
+  
   render() {
     return(
        <div>
          <button style={{opacity: this.state.displayBtn ? '0' : '1'}} className='add'>+</button>
-         <Header />
+         <Header showNav={this.showNav} />
          <Files files={this.state.files} />
          <BottomNav />
        </div>
