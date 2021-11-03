@@ -45,6 +45,7 @@ class Navbar extends React.Component {
             </div>
           </div>
           <p>315.65 MB of 15.0 GB</p>
+          <button className='buy-storage'>Buy Storage</button>
          </div>
         </nav>
       </div>
